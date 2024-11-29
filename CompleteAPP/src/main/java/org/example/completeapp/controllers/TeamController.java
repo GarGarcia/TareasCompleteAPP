@@ -60,6 +60,7 @@ public class TeamController {
     @GetMapping("/team/{id}")
     public String showTeam(@PathVariable Long id, Model model) {
         model.addAttribute("team", teamService.findById(id));
+        model.addAttribute("workers", workerService.findAll());
         return "teams/team";
     }
 }
