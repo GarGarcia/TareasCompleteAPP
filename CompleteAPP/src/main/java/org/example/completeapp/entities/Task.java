@@ -46,9 +46,11 @@ public class Task {
     @Column(name = "dateEnding", nullable = false)
     private LocalDate dateEnding;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private TypeTask type;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private StatusTask status;
 
