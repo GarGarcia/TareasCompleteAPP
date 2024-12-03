@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:fragment="pageTitle">Team</title>
+    <title layout:fragment="pageTitle">Workers List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 th:text="${team.name}"></h1>
-    <br>
-    <h2>Trabajadores</h2>
+    <h1>Workers</h1>
+    <a href="/workers/create" class="btn btn-success">Create New Worker</a>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Age</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,10 @@
             <td th:text="${worker.id}"></td>
             <td th:text="${worker.name}" th:href="@{/worker/{id}(id=${worker.id})}"></td>
             <td th:text="${worker.age}"></td>
+            <td>
+                <a th:href="@{/workers/edit/{id}(id=${worker.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/workers/delete/{id}(id=${worker.id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>

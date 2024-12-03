@@ -41,7 +41,7 @@ public class Task {
     private String description;
 
     @Column(name = "dateOpening", nullable = false)
-    private LocalDate dateOpnening;
+    private LocalDate dateOpening;
 
     @Column(name = "dateEnding", nullable = false)
     private LocalDate dateEnding;

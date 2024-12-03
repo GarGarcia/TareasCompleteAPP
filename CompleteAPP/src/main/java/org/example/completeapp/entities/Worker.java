@@ -32,7 +32,7 @@ public class Worker {
     @Column(name = "age", nullable = false)
     private int age;
 
-    @ManyToOne(cascade = CascadeType.REMOVE) // Indicamos que se eliminará el libro si se elimina el autor
+    @ManyToOne() // Indicamos que se eliminará el libro si se elimina el autor
     @JoinColumn(name = "team_id", nullable = false) // Indicamos la columna de la tabla authors que se usará para la relación
     private Team team;
 

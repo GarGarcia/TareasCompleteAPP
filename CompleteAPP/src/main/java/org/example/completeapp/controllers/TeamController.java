@@ -2,7 +2,6 @@ package org.example.completeapp.controllers;
 
 import org.example.completeapp.entities.Team;
 import org.example.completeapp.services.TeamService;
-import org.example.completeapp.services.WorkerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,19 +11,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/teams")
 public class TeamController {
     private final TeamService teamService;
-    private final WorkerService workerService;
 
-    public TeamController(TeamService teamService, WorkerService workerService) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
-        this.workerService = workerService;
     }
 
+    // List View
     @GetMapping
     public String listTeams (Model model){
         model.addAttribute("teams", teamService.findAll());
         return "teams/list";
     }
 
+
+    // Form View
     @GetMapping("/create")
     public String createForm(Model model){
         Team team = new Team();
@@ -57,10 +57,12 @@ public class TeamController {
         return "redirect:/teams";
     }
 
+
+    // Team View
     @GetMapping("/team/{id}")
     public String showTeam(@PathVariable Long id, Model model) {
         model.addAttribute("team", teamService.findById(id));
-        model.addAttribute("workers", workerService.findAll());
+        model.addAttribute("workers", teamService.findById(id).getWorkers());
         return "teams/team";
     }
 }

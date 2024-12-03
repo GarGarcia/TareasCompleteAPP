@@ -1,5 +1,6 @@
 package org.example.completeapp.services;
 
+import org.example.completeapp.entities.Team;
 import org.example.completeapp.entities.Worker;
 import org.example.completeapp.repositories.WorkerRepository;
 import org.springframework.stereotype.Service;
