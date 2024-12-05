@@ -62,7 +62,7 @@ public class WorkerController {
     }
 
 
-    // Team View
+    // Worker View
     @GetMapping("/worker/{id}")
     public String showTeam(@PathVariable Long id, Model model) {
         model.addAttribute("worker", workerService.findById(id));

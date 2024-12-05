@@ -8,25 +8,33 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Workers</h1>
-    <a href="/tasks/create" class="btn btn-success">Create New Tasks</a>
+    <h1>Tasks</h1>
+    <a href="/tasks/create" class="btn btn-success">Create New Task</a>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Age</th>
+            <th>Description</th>
+            <th>Opening Date</th>
+            <th>Ending Date</th>
+            <th>Type</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="worker : ${workers}">
-            <td th:text="${worker.id}"></td>
-            <td th:text="${worker.name}" th:href="@{/worker/{id}(id=${worker.id})}"></td>
-            <td th:text="${worker.age}"></td>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.name}" th:href="@{/task/{id}(id=${task.id})}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.dateOpening}"></td>
+            <td th:text="${task.dateEnding}"></td>
+            <td th:text="${task.type}"></td>
+            <td th:text="${task.status}"></td>
             <td>
-                <a th:href="@{/workers/edit/{id}(id=${worker.id})}" class="btn btn-primary">Edit</a>
-                <a th:href="@{/workers/delete/{id}(id=${worker.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/tasks/delete/{id}(id=${task.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

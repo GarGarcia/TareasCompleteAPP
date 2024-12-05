@@ -30,10 +30,9 @@ public class Task {
 
     // Indicamos que este campo es la clave primaria
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Indicamos que el valor de la clave primaria se generará automáticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Indicamos la columna first_name de la table, es una cadena, no puede ser nulo
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -54,10 +53,15 @@ public class Task {
     @Column(name = "status", nullable = false)
     private StatusTask status;
 
-    @ManyToOne(cascade = CascadeType.REMOVE) // Indicamos que se eliminará el libro si se elimina el autor
-    @JoinColumn(name = "team_id", nullable = false) // Indicamos la columna de la tabla authors que se usará para la relación
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = true)
     private Team team;
 
-    @ManyToMany(mappedBy = "tasks")  // Indicamos el atributo de la clase Author que se usará para la relación
-    private Set<Worker> workers = new HashSet<>();  // Atibuto de tipo Set para almacenar los autores
+    @ManyToMany
+    @JoinTable(
+            name = "worker_task",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "worker_id")
+    )
+    private Set<Worker> workers = new HashSet<>();
 }

@@ -32,15 +32,10 @@ public class Worker {
     @Column(name = "age", nullable = false)
     private int age;
 
-    @ManyToOne() // Indicamos que se eliminará el libro si se elimina el autor
-    @JoinColumn(name = "team_id", nullable = false) // Indicamos la columna de la tabla authors que se usará para la relación
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-    @ManyToMany
-    @JoinTable(
-            name = "worker_task",  // Nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name = "worker_id"),  // Columna que hace referencia al autor
-            inverseJoinColumns = @JoinColumn(name = "task_id")  // Columna que hace referencia a la editorial
-    )
-    private Set<Task> tasks = new HashSet<>();  // Relación con editoriales
+    @ManyToMany(mappedBy = "workers")
+    private Set<Task> tasks = new HashSet<>();
 }
