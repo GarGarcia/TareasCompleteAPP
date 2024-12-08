@@ -1,6 +1,7 @@
 package org.example.completeapp.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -11,5 +12,10 @@ public class IndexController {
     @GetMapping("/")
     public String index() {
         return "index"; // Devolvemos el nombre de la plantilla, en este caso index.html
+    }
+
+    @GetMapping("/controlPanel")
+    public String controlPanel() {
+        return "controlPanel/controlPanel";
     }
 }

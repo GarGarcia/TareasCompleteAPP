@@ -2,7 +2,6 @@ package org.example.completeapp.controllers;
 
 
 import org.example.completeapp.entities.Task;
-import org.example.completeapp.entities.Worker;
 import org.example.completeapp.services.TaskService;
 import org.example.completeapp.services.WorkerService;
 import org.springframework.stereotype.Controller;
@@ -72,5 +71,12 @@ public class TaskController {
     public String showTeam(@PathVariable Long id, Model model) {
         model.addAttribute("task", taskService.findById(id));
         return "tasks/task";
+    }
+
+    //Filter tasks
+    @GetMapping("/controlPanel/tareasRetrasadas")
+    public String mostrarTareasRetrasadas(Model model) {
+        model.addAttribute("tareasRetrasadas", taskService.showOverdueTasks());
+        return "controlPanel/tareasRetrasadas";
     }
 }
