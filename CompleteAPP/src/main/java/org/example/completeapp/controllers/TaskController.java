@@ -72,11 +72,4 @@ public class TaskController {
         model.addAttribute("task", taskService.findById(id));
         return "tasks/task";
     }
-
-    //Filter tasks
-    @GetMapping("/controlPanel/tareasRetrasadas")
-    public String mostrarTareasRetrasadas(Model model) {
-        model.addAttribute("tareasRetrasadas", taskService.showOverdueTasks());
-        return "controlPanel/tareasRetrasadas";
-    }
 }

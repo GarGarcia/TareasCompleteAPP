@@ -23,8 +23,8 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public Task save(Task task) {
-        return taskRepository.save(task);
+    public void save(Task task) {
+        taskRepository.save(task);
     }
 
     public void deleteById(Long id) {
@@ -32,6 +32,10 @@ public class TaskService {
     }
 
     public List<Task> showOverdueTasks() {
-        return taskRepository.showOverdueTasks(LocalDate.now(), Task.StatusTask.CERRADA);
+        return taskRepository.findByDateEndingBeforeAndStatusNot(LocalDate.now(), Task.StatusTask.CERRADA);
+    }
+
+    public List<Task> showInProgressTasksByWorkerId(Long id) {
+        return taskRepository.findByStatusAndWorkersId(Task.StatusTask.EN_PROGRESO, id);
     }
 }

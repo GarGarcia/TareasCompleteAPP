@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> showOverdueTasks(LocalDate fecha, Task.StatusTask estado);
+    List<Task> findByDateEndingBeforeAndStatusNot(LocalDate dateEnding, Task.StatusTask status);
+    List<Task> findByStatusAndWorkersId(Task.StatusTask status, Long workers_id);
 }
