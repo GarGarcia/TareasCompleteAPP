@@ -9,17 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 
 @Controller
 public class IndexController {
     private final TaskService taskService;
-    private final TaskRepository taskRepository;
+    private final WorkerService workerService;
 
-    public IndexController(TaskService taskService, TaskRepository taskRepository) {
+    public IndexController(TaskService taskService, WorkerService workerService) {
         this.taskService = taskService;
-        this.taskRepository = taskRepository;
+        this.workerService = workerService;
     }
 
     // La ruta para mostrar la página de inicio /
@@ -41,15 +43,40 @@ public class IndexController {
     }
 
     @GetMapping("/controlPanel/tareasEnCurso")
-    public String formularioFiltroTareas(Model model) {
-        model.addAttribute("worker", new Worker()); // Valor inicial
-        return "controlPanel/formularioFiltroTareas";
+    public String mostrarTareasEnCurso(Model model) {
+        model.addAttribute("tasks", taskService.showInProgressTasks());
+        return "controlPanel/tareasEnCurso";
     }
 
-    @PostMapping("/controlPanel/tareasEnCurso")
-    public String mostrarTareasEnCurso(@ModelAttribute Task task, Model model) {
-        List<Task> tareas = taskRepository.findByStatusAndWorkersId(Task.StatusTask.EN_PROGRESO, task.getId());
-        model.addAttribute("tareasEnCurso", tareas);
-        return "controlPanel/tareasEnCurso";
+    @GetMapping("/controlPanel/tareasAbiertas")
+    public String mostrarTareasAbiertas(Model model) {
+        List<Task> listaOrdenada = taskService.showOpenTasks();
+        listaOrdenada.sort(Comparator.comparing(Task::getDateOpening));
+        model.addAttribute("tasks", listaOrdenada);
+        model.addAttribute("hora", LocalDate.now());
+        return "controlPanel/tareasAbiertas";
+    }
+
+    @GetMapping("/controlPanel/numeroDeTareas")
+    public String mostrarNumeroTareas(Model model) {
+        double numBug = taskService.countBugTasks();
+        double numMejora = taskService.countMejoraTasks();
+        double numRefactor = taskService.countRefactorTasks();
+
+        double totalTasks = taskService.totalTasks();
+
+        model.addAttribute("numBug", (int) numBug);
+        model.addAttribute("numMejora", (int) numMejora);
+        model.addAttribute("numRefactor", (int) numRefactor);
+
+        double porcentajeBug = numBug / totalTasks * 100;
+        double porcentajeMejora = numMejora / totalTasks * 100;
+        double porcentajeRefactor = numRefactor / totalTasks * 100;
+
+        model.addAttribute("porcentajeBug", porcentajeBug);
+        model.addAttribute("porcentajeMejora", porcentajeMejora);
+        model.addAttribute("porcentajeRefactor", porcentajeRefactor);
+
+        return "controlPanel/numeroTareas";
     }
 }

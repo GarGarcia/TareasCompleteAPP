@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/workers")
 public class WorkerController {
@@ -67,6 +69,7 @@ public class WorkerController {
     public String showTeam(@PathVariable Long id, Model model) {
         model.addAttribute("worker", workerService.findById(id));
         model.addAttribute("tasks", workerService.findById(id).getTasks());
+        model.addAttribute("hora", LocalDate.now());
         return "workers/worker";
     }
 }

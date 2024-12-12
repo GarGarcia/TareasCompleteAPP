@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByDateEndingBeforeAndStatusNot(LocalDate dateEnding, Task.StatusTask status);
-    List<Task> findByStatusAndWorkersId(Task.StatusTask status, Long workers_id);
+    List<Task> findByStatus(Task.StatusTask status);
+    List<Task> findByType(Task.TypeTask typeTask);
 }
